@@ -28,9 +28,14 @@ public class VigilMastermind : MonoBehaviour
     List<GameObject> _borderObjectList = new List<GameObject>();
     [SerializeField]
     List<Vector3> _borderPointList = new List<Vector3>();
-    
     [SerializeField]
     RobotPathListDict _robotpathdic = new RobotPathListDict();
+
+
+    //실제 순찰하는 비율과그 뒤에서 배분을 통한 위치 수정과 관련함
+    [SerializeField]
+    float _reservationRatio = 0.3f;
+
 
     public List<Vector3> BaseBorderPointList { get => _borderPointList; set => _borderPointList = value; }
 

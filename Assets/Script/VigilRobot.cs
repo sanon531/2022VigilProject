@@ -27,7 +27,8 @@ public class VigilRobot : MonoBehaviour, IRobotFunction
     Dictionary<int, int> _ss;
     [SerializeField]
     EPatrolMode ePatrolMode = EPatrolMode.Patrol;
-
+    [SerializeField]
+    Transform _CHILD;
 
     public void SetDPathOnRobot(List<Vector3> _pathPoint)
     {
@@ -104,10 +105,14 @@ public class VigilRobot : MonoBehaviour, IRobotFunction
     #region // calling method
     void ChangeMovement(Vector3 _val)
     {
-        _val -= transform.position;
+        float angle = Mathf.Atan2(_val.y, _val.x) * Mathf.Rad2Deg;
+        _CHILD.transform.localRotation= Quaternion.AngleAxis(angle, Vector3.back);
 
+        _val -= transform.position;
         _val = _val.normalized;
         _rigidbody2D.velocity = _val * speed;
+              
+
         //방향은 그대로 하지만보는 위치의 변경을 만든다.
     }
 
