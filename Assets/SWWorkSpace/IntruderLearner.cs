@@ -42,9 +42,22 @@ public class IntruderLearner : Agent, IVigilLearn
     }
 
     // Update is called once per frame
+
+    float timer = 0;
     void Update()
     {
-        
+        timer += Time.deltaTime;
+
+        if (timer > 0.5f) 
+        {
+            for (int i = 0; i < intruders.Count; i++)
+            {
+                intruders[i].MoveToTarget(testTargets[i].position);
+            }
+            timer = 0f;
+        }
+
+
     }
 
 
