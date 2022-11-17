@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3457499203537564164}
   - component: {fileID: 3821682122880263278}
+  - component: {fileID: 2473845814095708691}
   m_Layer: 2
   m_Name: AttackRange
   m_TagString: Untagged
@@ -45,6 +46,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2473845814095708691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519958531437862041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c07a6870e4ec04abb8db5124aea028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetBot: 1
 --- !u!1 &5836565940961005754
 GameObject:
   m_ObjectHideFlags: 0

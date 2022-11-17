@@ -11,27 +11,36 @@ public enum EBot
 
 public class MovingBot : MonoBehaviour
 {
-    [SerializeField]
-    EBot thisbot ;
+    public EBot thisbot ;
     // Start is called before the first frame update
-    IVigilLearn mastermind;
+    IVigilAction mastermind;
     IAstarAI ai;
+    Transform _targetTransform;
 
+    Vector3 originalpos;
     void OnEnable()
     {
+        originalpos = transform.position;
         ai = GetComponent<IAstarAI>();
         ai.onSearchPath += MoveToTargetAstar;
-        mastermind = GetComponentInParent<IVigilLearn>();
+        mastermind = GetComponentInParent<IVigilAction>();
     }
     void OnDisable()
     {
-        if (ai != null) ai.onSearchPath -= MoveToTargetAstar;
+        SetMovableFalse();
     }
     [SerializeField]
     Vector3 target;
-    public void MoveToTarget(Vector3 val) 
+    public void MoveToTarget(Transform val) 
     {
-        target = val;
+        _targetTransform = val;
+        target = _targetTransform.position;
+        MoveToTargetAstar();
+    }
+    public void MovetoOrigin() 
+    {
+        _targetTransform = null;
+        target = originalpos;
         MoveToTargetAstar();
     }
     void MoveToTargetAstar() 
@@ -39,11 +48,15 @@ public class MovingBot : MonoBehaviour
         if (target != null && ai != null) 
             ai.destination = target;
     }
-    private void OnCollisionEnter(Collision collision)
+    public void SetMovableFalse() 
     {
-        mastermind.GetResultFromBot();
+        ai.canMove = false;
     }
 
-
+    public void CatchAlert(Transform transform) 
+    {
+        mastermind.GetResultFromBot(_targetTransform, this);
+        mastermind.DeleteTransform(transform);
+    }
 
 }

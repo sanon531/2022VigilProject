@@ -5,7 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class IntruderLearner : Agent, IVigilLearn
+public class IntruderMastermind : MonoBehaviour, IVigilAction
 {
 
     [SerializeField]
@@ -13,18 +13,7 @@ public class IntruderLearner : Agent, IVigilLearn
 
     [SerializeField]
     List<Transform> testTargets;
-    public override void Initialize()
-    {
-        base.Initialize();
 
-
-    }
-
-    public void GetResultFromBot()
-    {
-
-
-    }
 
     [SerializeField]
     bool isdebug = true;
@@ -37,7 +26,7 @@ public class IntruderLearner : Agent, IVigilLearn
 
         for (int i =0; i < intruders.Count;i++) 
         {
-            intruders[i].MoveToTarget(testTargets[i].position);
+            intruders[i].MoveToTarget(testTargets[i]);
         }
     }
 
@@ -52,7 +41,7 @@ public class IntruderLearner : Agent, IVigilLearn
         {
             for (int i = 0; i < intruders.Count; i++)
             {
-                intruders[i].MoveToTarget(testTargets[i].position);
+                intruders[i].MoveToTarget(testTargets[i]);
             }
             timer = 0f;
         }
@@ -60,9 +49,12 @@ public class IntruderLearner : Agent, IVigilLearn
 
     }
 
+    public void GetResultFromBot(Transform transform, MovingBot bot)
+    {
 
 
-
-
-
+    }
+    public void DeleteTransform(Transform transform)
+    {
+    }
 }
