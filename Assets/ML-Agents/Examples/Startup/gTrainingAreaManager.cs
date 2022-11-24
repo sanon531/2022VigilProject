@@ -5,7 +5,7 @@ using UnityEngine;
 public class gTrainingAreaManager : MonoBehaviour
 {
     public gTargetManager targetManager = null;
-    public gAgentManager agentManager = null;
+    
 
     void Start()
     {
@@ -19,6 +19,8 @@ public class gTrainingAreaManager : MonoBehaviour
 
     public void needEpisodeEnd()
     {
-        agentManager.EndEpisode();
+        
+
+        EpisodeStart();
     }
 }
