@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,75 +8,98 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
 
+
 public class gRollerAgent : Agent
-{
+{ 
     Rigidbody rBody;
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
     }
     public GameObject viewModel = null;
+    public Transform Target;
 
-    public gTrainingAreaManager trainingAreaManager = null;
+    private float time = 0;
     int Pointlast = 0;
     int Point = 0;
 
+
     public override void OnEpisodeBegin()
     {
-        //에피소드 시작시, 포지션 초기화
+         //에피소드 시작시, 포지션 초기화
         if (this.transform.localPosition.y < 0)
         {
             this.rBody.angularVelocity = Vector3.zero;
             this.rBody.velocity = Vector3.zero;
             this.transform.localPosition = new Vector3(0, 0.5f, 0);
+            
         }
 
         //타겟의 위치를 설정
-        
 
-        Pointlast = 0;
-        Point = 0;
+       
+       float rx = 0;
+       float rz = 0;
+       rx = Random.value * 4 + 2;
+       rz = Random.value * 4 + 2;
+       Target.localPosition = new Vector3(rx, 0.5f, rz);
+
+       Target.gameObject.SetActive(true);
+       Pointlast = 0;
+       Point = 0;
+   }
+    
 
 
+   
+    private void Update()
+    {
+        time += Time.deltaTime;
+        if (time==100)
+        {
+            EndEpisode();
+            time = 0;
+        }
     }
-    
-    
+
+
+
 
     /// 강화학습 행동 결정
     ///
-    
+
     public float forceMultiplier = 10;
-    
+
     float m_ForwardSpeed = 1.0f;
+
+    
+
 
     public void EnteredTarget()
     {
         Point++;
+        
     }
-   
+
+    public void EnteredGoal()
+    {
+        AddReward(-5.0f);
+
+    }
+
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
 
-        
-       
-
-        
-
-        //Rewards
-        
-
+      
         
         if (Pointlast < Point)
         {
-            SetReward(1.0f);
-            Pointlast = Point;
+            AddReward(1.0f);
+            Pointlast++;
+           
         }
-
-        if (trainingAreaManager.targetManager.goalCount <= Point)
-        {
-            trainingAreaManager.needEpisodeEnd();
-            
-        }
+        
 
         MoveAgent(actionBuffers.DiscreteActions);
 
