@@ -26,6 +26,9 @@ public class gRollerAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        if (gameObject.tag == "goal")
+            return;
+
          //에피소드 시작시, 포지션 초기화
         if (this.transform.localPosition.y < 0)
         {
@@ -78,12 +81,13 @@ public class gRollerAgent : Agent
     public void EnteredTarget()
     {
         Point++;
-        
+        CustomLogManager.Increase_CapturedCount();
     }
 
     public void EnteredGoal()
     {
         AddReward(-5.0f);
+        CustomLogManager.Increase_PassedCount();
 
     }
 

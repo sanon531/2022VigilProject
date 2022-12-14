@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class BotCatchScript : MonoBehaviour
 {
-    [SerializeField]
-    EBot targetBot= EBot.Vigil;
     MovingBot _parent;
-    MovingBot _current;
     private void OnEnable()
     {
         _parent = GetComponentInParent<MovingBot>();
@@ -16,12 +13,11 @@ public class BotCatchScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _current = other.GetComponent<MovingBot>();
-        if (_current.thisbot == targetBot) 
+        
+        if (other.tag == "Target") 
         {
             Debug.Log("catch" + other.gameObject.name);
             _parent.CatchAlert(other.transform);
-            _current.SetMovableFalse();
             other.enabled = false;
         }
 
